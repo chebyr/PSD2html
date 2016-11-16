@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.visiansystems.psdcmd</groupId>
+	<artifactId>psdcmd</artifactId>
+	<packaging>jar</packaging>
+	<version>1.4-SNAPSHOT</version>
+	<name>psdcmd</name>
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>psd-library</groupId>
+			<artifactId>psd-image</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<type>jar</type>
+			<systemPath>${project.basedir}/lib/psd-image-2.2-SNAPSHOT.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>psd-library</groupId>
+			<artifactId>psd-parser</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<type>jar</type>
+			<systemPath>${project.basedir}/lib/psd-parser-2.2-SNAPSHOT.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>psd-library</groupId>
+			<artifactId>psd-tool</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<type>jar</type>
+			<systemPath>${project.basedir}/lib/psd-tool-2.2-SNAPSHOT.jar</systemPath>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.5.0</version>
+				<executions>
+					<execution>
+					<goals>
+						<goal>java</goal>
+					</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>com.visiansystems.psdcmd.PsdCmd</mainClass>
+					<arguments>
+						<argument>-classpath</argument>
+						<!-- automatically creates the classpath using all project dependencies,
+							also adding the project build directory -->
+						<classpath/>
+						<argument>files/Blue-company-poster.psd</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/package</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>
+
